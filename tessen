@@ -89,6 +89,8 @@ get_gopass_files() {
   fi
 
   unset -v file ctr tmp_gopass_files
+
+  printf "$_TSN_PASSFILE"
 }
 
 # parse the password store file for username, password, otp, custom autotype,
@@ -246,6 +248,7 @@ key_menu() {
     "$_TSN_USERKEY") key_action "$_TSN_USERNAME" ;;
     password) key_action "$_TSN_PASSWORD" ;;
     otp) key_otp ;;
+    totp) key_otp ;;
     "$_TSN_URLKEY") key_action "$_TSN_URLKEY" ;;
     *) key_action "${_TSN_PASSDATA["$_CHOSEN_KEY"]}" ;;
   esac
@@ -368,6 +371,7 @@ auto_type_def() {
         ":space") wtype -s "$_TSN_DELAY" -k space -- ;;
         ":enter") wtype -s "$_TSN_DELAY" -k Return -- ;;
         ":otp") key_otp ;;
+        ":totp") key_otp ;;
         path | basename | filename) auto_type "${_TSN_PASSFILE##*/}" ;;
         "$_TSN_USERKEY") auto_type "$_TSN_USERNAME" ;;
         pass | password) auto_type "$_TSN_PASSWORD" ;;
